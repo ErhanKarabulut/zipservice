@@ -21,4 +21,4 @@ config.SummaryStyle =
         null,
         Perfolizer.Horology.TimeUnit.Second);
 
-BenchmarkRunner.Run<ZipBenchmark>(config);
+BenchmarkRunner.Run<ZipBenchmarks>(config);

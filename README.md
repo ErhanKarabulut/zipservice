@@ -136,20 +136,21 @@ BenchmarkDotNet v0.13.7, Windows 10 (10.0.19045.3324/22H2/2022Update)
 
 
 ```
-|                 Method | Mean [s] | Error [s] | StdDev [s] |
-|----------------------- |---------:|----------:|-----------:|
-|        ZipWrite_With10 | 0.3542 s |  0.0068 s |   0.0053 s |
-|   ZipWriteAsync_With10 | 0.0088 s |  0.0001 s |   0.0001 s |
-|        ZipWrite_With50 | 1.6907 s |  0.0192 s |   0.0160 s |
-|   ZipWriteAsync_With50 | 0.0437 s |  0.0008 s |   0.0007 s |
-|        ZipWrite_With80 | 1.7238 s |  0.0340 s |   0.0405 s |
-|   ZipWriteAsync_With80 | 0.0458 s |  0.0008 s |   0.0016 s |
-|       ZipWrite_With100 |       NA |        NA |         NA |
-|  ZipWriteAsync_With100 | 0.8807 s |  0.0171 s |   0.0261 s |
-|      ZipWrite_With1000 |       NA |        NA |         NA |
-| ZipWriteAsync_With1000 | 0.8452 s |  0.0124 s |   0.0110 s |
+|                 Method | Mean [s] | Error [s] | StdDev [s] | Median [s] |
+|----------------------- |---------:|----------:|-----------:|-----------:|
+|        ZipWrite_With10 | 0.3436 s |  0.0068 s |   0.0123 s |   0.3382 s |
+|   ZipWriteAsync_With10 | 0.0086 s |  0.0002 s |   0.0002 s |   0.0086 s |
+|        ZipWrite_With50 | 1.7236 s |  0.0342 s |   0.0480 s |   1.7234 s |
+|   ZipWriteAsync_With50 | 0.0435 s |  0.0009 s |   0.0010 s |   0.0429 s |
+|        ZipWrite_With80 |       NA |        NA |         NA |         NA |
+|   ZipWriteAsync_With80 | 0.0700 s |  0.0014 s |   0.0016 s |   0.0697 s |
+|       ZipWrite_With100 |       NA |        NA |         NA |         NA |
+|  ZipWriteAsync_With100 | 0.0870 s |  0.0005 s |   0.0004 s |   0.0871 s |
+|      ZipWrite_With1000 |       NA |        NA |         NA |         NA |
+| ZipWriteAsync_With1000 | 0.8712 s |  0.0111 s |   0.0087 s |   0.8673 s |
 
 Benchmarks with issues:
+  ZipBenchmark.ZipWrite_With80: DefaultJob
   ZipBenchmark.ZipWrite_With100: DefaultJob
   ZipBenchmark.ZipWrite_With1000: DefaultJob
 

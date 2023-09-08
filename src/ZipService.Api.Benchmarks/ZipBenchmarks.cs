@@ -2,7 +2,7 @@
 
 namespace ZipService.Api.Benchmarks;
 
-public class ZipBenchmark
+public class ZipBenchmarks
 {
     private readonly MemoryStream _asyncStream = new();
     private readonly CancellationTokenSource _cts = new();
@@ -34,13 +34,13 @@ public class ZipBenchmark
     [Benchmark]
     public void ZipWrite_With80()
     {
-        Zip.Write(_asyncStream, 50);
+        Zip.Write(_asyncStream, 80);
     }
 
     [Benchmark]
     public async Task ZipWriteAsync_With80()
     {
-        await Zip.WriteAsync(_asyncStream, 50, _cts.Token);
+        await Zip.WriteAsync(_asyncStream, 80, _cts.Token);
     }
 
     [Benchmark]
@@ -52,13 +52,13 @@ public class ZipBenchmark
     [Benchmark]
     public async Task ZipWriteAsync_With100()
     {
-        await Zip.WriteAsync(_asyncStream, 1000, _cts.Token);
+        await Zip.WriteAsync(_asyncStream, 100, _cts.Token);
     }
 
     [Benchmark]
     public void ZipWrite_With1000()
     {
-        Zip.Write(_asyncStream, 100);
+        Zip.Write(_asyncStream, 1000);
     }
 
     [Benchmark]
