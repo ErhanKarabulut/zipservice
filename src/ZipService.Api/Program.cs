@@ -1,7 +1,11 @@
-using Microsoft.AspNetCore.Http.Features;
 using ZipService.Api;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.AllowSynchronousIO = true;
+});
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -19,10 +23,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/{files}", async (int files, CancellationToken cancellationToken, HttpContext httpContext, HttpResponse response) =>
+app.MapGet("/{files}", async (int files, CancellationToken cancellationToken, HttpResponse response) =>
 {
-    httpContext.Features.Get<IHttpBodyControlFeature>()!.AllowSynchronousIO = true;
-
     response.Headers.Add("Content-Disposition", "attachment; filename=test.zip");
     response.ContentType = "application/octet-stream";
 
@@ -30,10 +32,8 @@ app.MapGet("/{files}", async (int files, CancellationToken cancellationToken, Ht
 
 }).WithOpenApi();
 
-app.MapGet("/v2/{files}", (int files, HttpContext httpContext, HttpResponse response) =>
+app.MapGet("/v2/{files}", (int files, HttpResponse response) =>
 {
-    httpContext.Features.Get<IHttpBodyControlFeature>()!.AllowSynchronousIO = true;
-
     response.Headers.Add("Content-Disposition", "attachment; filename=test.zip");
     response.ContentType = "application/octet-stream";
 
