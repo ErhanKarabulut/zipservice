@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Features;
 using ZipService.Api;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,27 +19,27 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/{files}", async (int files, CancellationToken cancellationToken, HttpResponse response) =>
+app.MapGet("/{files}", async (int files, CancellationToken cancellationToken, HttpContext httpContext, HttpResponse response) =>
 {
-    using var memoryStream = new MemoryStream();
-    await Zip.WriteAsync(memoryStream, files, cancellationToken);
-    memoryStream.Position = 0;
-    response.Headers.Add("Content-Disposition", "attachment; filename=test.zip");
-    response.ContentType = "application/octet-stream";
-    await memoryStream.CopyToAsync(response.Body, cancellationToken);
-})
-.WithOpenApi();
+    httpContext.Features.Get<IHttpBodyControlFeature>()!.AllowSynchronousIO = true;
 
-app.MapGet("/v2/{files}", async (int files, HttpResponse response) =>
-{
-    using var memoryStream = new MemoryStream();
-    Zip.Write(memoryStream, files);
-    memoryStream.Position = 0;
     response.Headers.Add("Content-Disposition", "attachment; filename=test.zip");
     response.ContentType = "application/octet-stream";
-    await memoryStream.CopyToAsync(response.Body);
-})
-.WithOpenApi();
+
+    await Zip.WriteAsync(response.Body, files, cancellationToken);
+
+}).WithOpenApi();
+
+app.MapGet("/v2/{files}", (int files, HttpContext httpContext, HttpResponse response) =>
+{
+    httpContext.Features.Get<IHttpBodyControlFeature>()!.AllowSynchronousIO = true;
+
+    response.Headers.Add("Content-Disposition", "attachment; filename=test.zip");
+    response.ContentType = "application/octet-stream";
+
+    Zip.Write(response.Body, files);
+
+}).WithOpenApi();
 
 app.Run();
 
