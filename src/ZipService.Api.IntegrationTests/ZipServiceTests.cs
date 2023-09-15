@@ -10,6 +10,7 @@ namespace ZipService.Api.IntegrationTests
 
         public ZipServiceTests(WebApplicationFactory<Program> factory)
         {
+            factory.Server.AllowSynchronousIO = true;
             _httpClient = factory.CreateClient();
         }
 
